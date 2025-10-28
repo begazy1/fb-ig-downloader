@@ -1,14 +1,40 @@
-# Python virtual environment
+# Python compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
 .venv/
+env/
 venv/
 
-# Byte-compiled / cache files
-__pycache__/
-*.pyc
-
-# IDE/project files
+# PyCharm / IDE
 .idea/
+*.iml
 
-# Temporary video files
+# Video/temp files
 *.mp4
 *.mp4.part
+temp_*.mp4
+
+# Logs
+*.log
+
+# Byte-compiled / distribution
+build/
+dist/
+*.egg-info/
+
+# Flask / instance folder
+instance/
+.webassets-cache
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Misc
+*.swp
