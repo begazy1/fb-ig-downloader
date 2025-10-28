@@ -63,11 +63,11 @@ HTML_PAGE = """
         }
         video, img.thumbnail {
             width: 100%;
-    max-height: 250px; /* limit thumbnail height */
-    object-fit: cover; /* crop nicely to fit */
-    border-radius: 12px;
-    margin-top: 15px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            max-height: 250px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-top: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         .meta {
             text-align: left;
@@ -141,11 +141,10 @@ HTML_PAGE = """
     </div>
 
     <div class="footer">
-        <p>© 2025 Gazy's Tek Solutions | Connect with our team |
-        Bring all your tech related problems to us</p>
+        <p>© 2025 Gazy's Tek Solutions | Connect with our team | Bring all your tech related problems to us</p>
         <p>You can report issues as well as suggestions to our team</p>
         <a href="https://wa.me/233538770364" target="_blank"><i class="fab fa-whatsapp"></i></a>
-        <a href="https://m.me/Street Debee"" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://m.me/StreetDebee" target="_blank"><i class="fab fa-facebook"></i></a>
     </div>
 
     <script>
@@ -160,8 +159,8 @@ HTML_PAGE = """
 </html>
 """
 
-def auto_delete(filename, delay=60):
-    """Delete temp file after some seconds to free space"""
+def auto_delete(filename, delay=180):
+    """Delete temp file after delay to free space"""
     def remove_file():
         try:
             if os.path.exists(filename):
@@ -182,23 +181,24 @@ def index():
 
         ydl_opts = {
             "outtmpl": filename,
-            "format": "best[ext=mp4]/best",
+            "format": "bestvideo+bestaudio/best",
             "quiet": True,
             "noplaylist": True,
             "skip_download": True
         }
 
         try:
+            # Extract info
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 info = ydl.extract_info(video_url, download=False)
                 title = info.get("title", "Unknown Title")
                 thumbnail = info.get("thumbnail", "")
 
             # Download video
-            with yt_dlp.YoutubeDL({"outtmpl": filename, "quiet": True, "format": "best"}) as ydl:
+            with yt_dlp.YoutubeDL({"outtmpl": filename, "quiet": True, "format": "bestvideo+bestaudio/best"}) as ydl:
                 ydl.download([video_url])
 
-            auto_delete(filename)  # delete after 60 seconds
+            auto_delete(filename)  # delete after 3 minutes
             return render_template_string(HTML_PAGE, video_preview=filename, filename=filename, title=title, thumbnail=thumbnail)
 
         except Exception as e:
